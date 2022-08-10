@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import Basket from "./components/Basket";
 import ItemList from "./components/ItemList";
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function App() {
   
@@ -36,6 +35,10 @@ function App() {
 
   ])
 
+  useEffect(() => {
+    setCurrentBasket([])
+  }, [user])
+
   const addToBasket = (index) => {
     const newItem = items[index]
     const copyBasket = [...currentBasket, newItem]
@@ -46,6 +49,11 @@ function App() {
     copyBasket.splice(index, 1)
     setCurrentBasket(copyBasket)
   }
+  const changeUser = (event) => {
+    event.preventDefault();
+    setUser(event.target.username.value)
+    event.target.reset();
+  }
   
   return (
     <>
@@ -53,6 +61,10 @@ function App() {
       <Title>
         Shoes Shoes Shoes
       </Title>
+      <UserForm onSubmit={changeUser}>
+        <input type="text" id='username' />
+        <input type="submit" value='Login' />
+      </UserForm>
       <Basket currentBasket={currentBasket} user={user} removeFromBasket={removeFromBasket}/>
     </Header>
     
@@ -68,6 +80,9 @@ const Header = styled.header`
   justify-content: space-around;
 `;
 const Title = styled.h1`
+  
+`;
+const UserForm = styled.form.attrs(props=>({onSubmit:props.onSubmit}))`
   
 `;
 
