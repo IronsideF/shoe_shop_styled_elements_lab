@@ -7,6 +7,7 @@ import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 const Basket = ({currentBasket, user, removeFromBasket}) => {
   
     const basketNodes = currentBasket.map((item, i) => <BasketItem removeFromBasket={removeFromBasket} index={i} key={item.id} name={item.name} price={item.price} imageUrl={item.imageUrl}></BasketItem>)
+    const total = currentBasket.reduce((acc, item) => {return acc+item.price}, 0)
   
     return (<DisplayBasket>
     <BasketTitle>
@@ -14,6 +15,7 @@ const Basket = ({currentBasket, user, removeFromBasket}) => {
     </BasketTitle>
     <BasketDropdown>
     {basketNodes}
+    {currentBasket.length ? <p>Total: £{total}</p> : null}
     </BasketDropdown>
     </DisplayBasket>
   )
